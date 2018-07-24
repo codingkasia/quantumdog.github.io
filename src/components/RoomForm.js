@@ -24,14 +24,14 @@ class RoomForm extends React.Component {
         return (
             <div className="newRoomForm">
                 <form onSubmit={this.handleSubmit}>
-                    <label>New Room:</label>
+                    <label>Create A New Room:</label>
                     <br />
                     <input
                         type="text"
                         value={this.state.name}
                         onChange={this.handleChange}
                     />
-                    <input type="submit" />
+                    <input type="submit" value="CREATE"/>
                 </form>
             </div>
         );

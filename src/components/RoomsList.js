@@ -65,16 +65,18 @@ class RoomsList extends React.Component {
           channel={{ channel: "RoomsChannel" }}
           onReceived={this.handleReceivedRoom}
         />
+        
         {this.state.rooms.length ? (
           <Cable rooms={rooms} handleReceivedGuess={this.handleReceivedGuess} />
         ) : null}
-        <h2>Rooms</h2>
+        
+        <h2>GAME ROOMS</h2>
+        <h3>Enter A Room To Play a Game</h3>
         <ul>{mapRooms(rooms, this.handleClick)}</ul>
         <RoomForm />
         {activeRoom ? (
           <Board
             room={findActiveRoom(rooms, activeRoom)}
-            
           />
         ) : null}
       </div>
@@ -93,7 +95,7 @@ const findActiveRoom = (rooms, activeRoom) => {
 };
 
 const mapRooms = (rooms, handleClick) => {
-    if (rooms) {
+    
         return rooms.map(room => {
             return (
                 <li key={room.id} onClick={() => handleClick(room.id)}>
@@ -101,6 +103,6 @@ const mapRooms = (rooms, handleClick) => {
                 </li>
             );
         });
-    } 
+
    
 };

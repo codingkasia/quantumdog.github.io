@@ -6,19 +6,28 @@ class Square extends React.Component {
   state = {
     value: this.props.value,
     room_id: this.props.room_id,
-    color: "blue"
+    color: null,
+    lucky: null
   };
 
     // handleChange = () => {
     //     this.setState({ value: this.props.value });
     // };
 
+    componentDidMount() {
+        this.setState({ lucky: Math.floor(Math.random() * 9) + 1 });
+
+    }
+    foundLucky = () => {
+        // console.log("YOU FOUND LUCKY!")
+       return  (this.state.value === this.state.lucky) ? this.setState({ bgColor: "green" }) : this.setState({ bgColor: "pink" })
+    }
+
   handleClick = () => {
-    console.log("CLICKED!");
-    // this.handleChange();
     console.log(this.state.value);
-    this.setState({ bgColor: "green" });
-    this.postGuess();
+      this.foundLucky() 
+      this.postGuess();
+
   };
 
   componentWillReceiveProps = nextProps => {
