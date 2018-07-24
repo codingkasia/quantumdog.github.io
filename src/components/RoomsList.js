@@ -70,8 +70,10 @@ class RoomsList extends React.Component {
           <Cable rooms={rooms} handleReceivedGuess={this.handleReceivedGuess} />
         ) : null}
         
-        <h2>GAME ROOMS</h2>
-        <h3>Enter A Room To Play a Game</h3>
+        <h1>GAME ROOMS</h1>
+        <p>In order to play a game you can create your own <br />
+        or enter an existing one if available</p>
+        <h2>Enter A Room To Play</h2>
         <ul>{mapRooms(rooms, this.handleClick)}</ul>
         <RoomForm />
         {activeRoom ? (
