@@ -19,17 +19,10 @@ class Square extends React.Component {
 
     }
 
-    showLucky = () => {
-
-    }
-
-    // clearBoard = () => {
-    //   return setTimeout(this.setState({ bgColor: "green" }), 5000;
-    // }
-
     foundLucky = () => {
         // console.log("YOU FOUND LUCKY!")
-       return  (this.state.value === this.state.lucky) ? this.setState({ bgColor: "green" }) : this.setState({ bgColor: "orange" })
+   
+      return this.state.value === this.state.lucky ? this.setState({ bgColor: "green" }) : this.setState({ bgColor: "orange" });
     }
 
   handleClick = () => {
