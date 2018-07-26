@@ -8,7 +8,8 @@ import Cable from './Cables';
 class RoomsList extends React.Component {
   state = {
     rooms: [],
-    activeRoom: null
+    activeRoom: null,
+    activeUser: null
   };
 
   componentDidMount = () => {
@@ -43,7 +44,7 @@ class RoomsList extends React.Component {
 
   handleChangeGuess = (data) => {
       console.log(this.props.value);
-      fetch("http://localhost:3000/guesses", {
+      fetch("http://localhost:3001/guesses", {
           method: "POST",
           body: JSON.stringify({ value: data }),
           headers: {
@@ -59,30 +60,21 @@ class RoomsList extends React.Component {
 
   render = () => {
     const { rooms, activeRoom } = this.state;
-    return (
-      <div className="roomsList">
-        <ActionCable
-          channel={{ channel: "RoomsChannel" }}
-          onReceived={this.handleReceivedRoom}
-        />
-        
-        {this.state.rooms.length ? (
-          <Cable rooms={rooms} handleReceivedGuess={this.handleReceivedGuess} />
-        ) : null}
-        
+    return <div className="roomsList">
+        <ActionCable channel={{ channel: "RoomsChannel" }} onReceived={this.handleReceivedRoom} />
+
+        {this.state.rooms.length ? <Cable rooms={rooms} handleReceivedGuess={this.handleReceivedGuess} /> : null}
+
         <h1>GAME ROOMS</h1>
-        <p>In order to play a game you can create your own <br />
-        or enter an existing one if available</p>
+        <p>
+          In order to play a game you can create your own <br />
+          or enter an existing one if available
+        </p>
         <h2>Enter A Room To Play</h2>
         <ul>{mapRooms(rooms, this.handleClick)}</ul>
         <RoomForm />
-        {activeRoom ? (
-          <Board
-            room={findActiveRoom(rooms, activeRoom)}
-          />
-        ) : null}
-      </div>
-    );
+      {activeRoom ? <Board room={findActiveRoom(rooms, activeRoom)} /> : null}
+      </div>;
   };
 }
 

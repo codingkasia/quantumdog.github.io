@@ -5,11 +5,15 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { API_WS_ROOT } from './constants';
+import { BrowserRouter } from "react-router-dom";
+
 
 ReactDOM.render(
-    <ActionCableProvider url={API_WS_ROOT}>
-        <App />
-    </ActionCableProvider>,
+    <BrowserRouter>
+        <ActionCableProvider url={API_WS_ROOT}>
+            <App />
+        </ActionCableProvider> 
+    </BrowserRouter>,
     document.getElementById('root')
 );
 registerServiceWorker();

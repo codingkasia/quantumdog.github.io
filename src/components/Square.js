@@ -3,6 +3,9 @@ import React from 'react';
 import { API_ROOT, HEADERS } from '../constants';
 
 class Square extends React.Component {
+  // showUser = () => {
+  //   console.log(_current_user)
+  // }
   state = {
     value: this.props.value,
     room_id: this.props.room_id,
@@ -26,6 +29,7 @@ class Square extends React.Component {
     }
 
   handleClick = () => {
+    // console.log(this.params.users)
     console.log(this.state.value);
       this.foundLucky() 
       this.postGuess();
