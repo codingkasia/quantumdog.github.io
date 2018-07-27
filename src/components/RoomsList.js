@@ -9,13 +9,14 @@ class RoomsList extends React.Component {
   state = {
     rooms: [],
     activeRoom: null,
-    activeUser: null
+    activeUser: []
   };
 
   componentDidMount = () => {
     fetch(`${API_ROOT}/rooms`)
       .then(res => res.json())
       .then(rooms => this.setState({ rooms }));
+
   };
 
   handleChangeGuess = () => {
@@ -24,7 +25,8 @@ class RoomsList extends React.Component {
     });
   };
   handleClick = id => {
-    this.setState({ activeRoom: id });
+    console.log(`current user, ${this.props.userInfo}`)
+    this.setState({ activeRoom: id, activeUser: [...this.state.activeUser, this.props.userInfo] });
   };
 
   handleReceivedRoom = response => {
@@ -39,11 +41,13 @@ class RoomsList extends React.Component {
     const rooms = [...this.state.rooms];
     const room = rooms.find(room => room.id === guess.room_id);
     room.guesses = [...room.guesses, guess];
+    // const guesses = [...this.state.guesses]
+    // r
     this.setState({ rooms });
   };
 
   handleChangeGuess = (data) => {
-      console.log(this.props.value);
+      // console.log(this.props.value);
       fetch("http://localhost:3001/guesses", {
           method: "POST",
           body: JSON.stringify({ value: data }),
@@ -73,7 +77,7 @@ class RoomsList extends React.Component {
         <h2>Enter A Room To Play</h2>
         <ul>{mapRooms(rooms, this.handleClick)}</ul>
         <RoomForm />
-      {activeRoom ? <Board room={findActiveRoom(rooms, activeRoom)} /> : null}
+        {activeRoom ? <Board room={findActiveRoom(rooms, activeRoom)} activeUser={this.state.activeUser}/> : null}
       </div>;
   };
 }
@@ -87,6 +91,7 @@ const findActiveRoom = (rooms, activeRoom) => {
         room => room.id === activeRoom
     );
 };
+
 
 const mapRooms = (rooms, handleClick) => {
     

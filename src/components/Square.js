@@ -9,13 +9,13 @@ class Square extends React.Component {
   state = {
     value: this.props.value,
     room_id: this.props.room_id,
-    color: null,
-    lucky: null
+    user_id: this.props.user_id,
+    color: null ,
+    lucky: null,
+    found: false,
+    
   };
 
-    // handleChange = () => {
-    //     this.setState({ value: this.props.value });
-    // };
 
     componentDidMount() {
         this.setState({ lucky: Math.floor(Math.random() * 9) + 1 });
@@ -24,15 +24,18 @@ class Square extends React.Component {
 
     foundLucky = () => {
         // console.log("YOU FOUND LUCKY!")
+        console.log(`User with id, ${this.state.user_id} got lucky!`)
    
-      return this.state.value === this.state.lucky ? this.setState({ bgColor: "green" }) : this.setState({ bgColor: "orange" });
+      return this.state.value === this.state.lucky ? this.setState({ bgColor: "green", found: true }) : this.setState({ bgColor: "orange" });
     }
 
   handleClick = () => {
     // console.log(this.params.users)
     console.log(this.state.value);
+    console.log(`user id =${this.state.user_id}`)
       this.foundLucky() 
       this.postGuess();
+      this.test()
 
   };
 
@@ -47,9 +50,11 @@ class Square extends React.Component {
       body: JSON.stringify(this.state),
       headers: HEADERS
     });
+
     this.setState({value: null})
   };
   render = () => {
+    
     return (
       <button
         className="square"

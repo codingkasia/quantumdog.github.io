@@ -7,16 +7,21 @@ class Login extends React.Component {
         password: ""
     };
 
+    // userInfo = () => {
+    //     this.state.username.id
+    // }
+
     login = e => {
         e.preventDefault();
+
 
         let params = {
             username: this.state.username,
             password: this.state.password
         };
 
-        let url = "http://localhost:3001/login";
-
+        let url = "http://localhost:3001/login" 
+      
         fetch(url, {
             method: "POST",
             headers: { "content-type": "application/json" },
@@ -26,7 +31,7 @@ class Login extends React.Component {
             .then(res => {
                 console.log(res)
                 localStorage.setItem("token", res.token)
-            });
+            })
     };
 
     render() {
@@ -47,6 +52,7 @@ class Login extends React.Component {
                   />
                   <button onClick={this.login}>Login</button>
               </form>
+              
           </div>
         )
     }
