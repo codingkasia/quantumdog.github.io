@@ -27,7 +27,7 @@ class RoomsList extends React.Component {
   handleClick = id => {
     console.log(`current user, ${this.props.userInfo}`)
     this.setState({ activeRoom: id, activeUser: [...this.state.activeUser, this.props.userInfo] });
-  };
+  };Us
 
   handleReceivedRoom = response => {
     const { room } = response;
@@ -41,8 +41,7 @@ class RoomsList extends React.Component {
     const rooms = [...this.state.rooms];
     const room = rooms.find(room => room.id === guess.room_id);
     room.guesses = [...room.guesses, guess];
-    // const guesses = [...this.state.guesses]
-    // r
+   
     this.setState({ rooms });
   };
 
