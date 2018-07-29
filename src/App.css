@@ -35,11 +35,10 @@ ol, ul {
   font-size: 24px;
   font-weight: bold;
   line-height: 34px;
-  height: 100px;
+  height: 40px;
   padding: 0;
   text-align: center;
-  color: white;
-  width: 100px;
+  width: 40px;
 }
 
 .square:focus {

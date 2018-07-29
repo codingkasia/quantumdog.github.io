@@ -12,12 +12,16 @@ class RoomsList extends React.Component {
     activeUser: []
   };
 
+  
   componentDidMount = () => {
     fetch(`${API_ROOT}/rooms`)
       .then(res => res.json())
       .then(rooms => this.setState({ rooms }));
-
   };
+
+  // userGuess = () => {
+  //   this.state.userGuess
+  // }
 
   handleChangeGuess = () => {
     this.setState({
@@ -25,9 +29,13 @@ class RoomsList extends React.Component {
     });
   };
   handleClick = id => {
-    console.log(`current user, ${this.props.userInfo}`)
-    this.setState({ activeRoom: id, activeUser: [...this.state.activeUser, this.props.userInfo] });
-  };Us
+    // console.log(`current user, ${this.props.userInfo}`)
+    this.setState({
+      activeRoom: id,
+      activeUser: [...this.state.activeUser, this.props.userInfo]
+    });
+  };
+  Us;
 
   handleReceivedRoom = response => {
     const { room } = response;
@@ -41,32 +49,37 @@ class RoomsList extends React.Component {
     const rooms = [...this.state.rooms];
     const room = rooms.find(room => room.id === guess.room_id);
     room.guesses = [...room.guesses, guess];
-   
+
     this.setState({ rooms });
   };
 
-  handleChangeGuess = (data) => {
-      // console.log(this.props.value);
-      fetch("http://localhost:3001/guesses", {
-          method: "POST",
-          body: JSON.stringify({ value: data }),
-          headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json"
-          }
-      })
-          .then(res => res.json())
-          .catch(error => console.error("Error:", error))
-          .then(response => console.log("Success:", response));
-  }
-
+  handleChangeGuess = data => {
+    // console.log(this.props.value);
+    fetch("http://localhost:3001/guesses", {
+      method: "POST",
+      body: JSON.stringify({ value: data }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    })
+      .then(res => res.json())
+      .catch(error => console.error("Error:", error))
+      .then(response => console.log("Success:", response));
+  };
 
   render = () => {
     const { rooms, activeRoom } = this.state;
-    return <div className="roomsList">
-        <ActionCable channel={{ channel: "RoomsChannel" }} onReceived={this.handleReceivedRoom} />
+    return (
+      <div className="roomsList">
+        <ActionCable
+          channel={{ channel: "RoomsChannel" }}
+          onReceived={this.handleReceivedRoom}
+        />
 
-        {this.state.rooms.length ? <Cable rooms={rooms} handleReceivedGuess={this.handleReceivedGuess} /> : null}
+        {this.state.rooms.length ? (
+          <Cable rooms={rooms} handleReceivedGuess={this.handleReceivedGuess} />
+        ) : null}
 
         <h1>GAME ROOMS</h1>
         <p>
@@ -76,8 +89,15 @@ class RoomsList extends React.Component {
         <h2>Enter A Room To Play</h2>
         <ul>{mapRooms(rooms, this.handleClick)}</ul>
         <RoomForm />
-        {activeRoom ? <Board room={findActiveRoom(rooms, activeRoom)} activeUser={this.state.activeUser}/> : null}
-      </div>;
+        {activeRoom ? (
+          <Board
+            room={findActiveRoom(rooms, activeRoom)}
+            activeUser={this.state.activeUser}
+      
+          />
+        ) : null}
+      </div>
+    );
   };
 }
 
