@@ -2,6 +2,7 @@ import React from 'react';
 import { HEADERS } from '../constants';
 import { API_ROOT } from '../constants';
 const baseUrl = "http://localhost:3001";
+const award = 100
 class Square extends React.Component {
   constructor(props) {
     super(props);
@@ -12,8 +13,6 @@ class Square extends React.Component {
       bgColor: null,
       lucky: 10,
       found: false
-
-      // guesses: this.props.guesses
     };
     this.findLucky = this.findLucky.bind(this);
   }
@@ -39,6 +38,7 @@ class Square extends React.Component {
   luckyRewards = () => {
     // this.props.points = this.props.points + 100
     this.setState({ bgColor: "green" });
+
   };
 
   findLucky() {
@@ -67,8 +67,9 @@ class Square extends React.Component {
   //       return this.setState({ color: "red" });
   //     }
   //   });
-  // }
+  // };
 
+  totalPoints = this.props.points + 100
   test = () => {
     // console.log("AM I TESTING????")
     //   console.log(`VALUE, ${this.state.value}`);
@@ -98,15 +99,13 @@ class Square extends React.Component {
   };
 
   handleClick = () => {
-    // this.foundLucky();
-    // this.saveClick()
+
     this.postGuess();
     this.findLucky();
-    // this.setUpPoints();
-    // this.fetchPoints();
-    // this.test();
-    // this.test2()
-    // this.resetValue()
+    // this.updatePointsDB();
+    this.updatePointState();
+
+
   };
 
   resetValue = () => {
@@ -115,13 +114,7 @@ class Square extends React.Component {
   componentWillReceiveProps = nextProps => {
     this.setState({ room_id: nextProps.room_id });
   };
-  // updateColor = () => {
-  //   fetch(`${API_ROOT}/guesses`, {
-  //     method: "UPDATE",
-  //     body: JSON.stringify({ bgColor: "yellow"}),
-  //     headers: HEADERS
-  //   });
-  // }
+  
 
   postGuess = () => {
     console.log("READY FOR FETCH");
@@ -132,6 +125,23 @@ class Square extends React.Component {
     });
     // .then(resp => resp.json()).then(result => this.test())
   };
+
+  updatePointsDB = () => {
+    fetch(`${API_ROOT}/points`, {
+      method: "PATCH",
+      body: JSON.stringify({ points: { points: this.points + award } }),
+      headers: HEADERS
+    });
+  }
+
+  updatePointState = () => {
+    fetch(`${API_ROOT}/points`)
+      .then(res => res.json())
+      .then(points => {
+        console.log(points.points)
+        this.setState({points: points.points})
+      });
+  }
 
   render() {
     return (

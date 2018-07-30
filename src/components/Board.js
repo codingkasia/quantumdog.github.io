@@ -13,18 +13,32 @@ class Board extends React.Component {
   //   guesses: this.props.guesses
   // };
 
-  // state = {
-  //   points: 0
-  // }
+  state = {
+    points: null
+  }
+  
+  componentDidMount() {
+    this.fetchPoints() 
+  }
+      
+
+  fetchPoints = () => {
+    fetch(`${API_ROOT}/points`)
+      .then(res => res.json())
+      .then(points => console.log(points.points))
+        // this.setState({ points: points.points }));
+  }; 
+
   
   renderSquare(i) {
     return (
       <Square
+        points={this.state.points}
         guesses={this.props.room.guesses}
         value={i}
         room_id={this.props.room.id}
         user_id={this.props.activeUser}
-        // points={this.state.points}
+        fetchPoints={this.fetchPoints}
       />
     );
   }
@@ -32,8 +46,8 @@ class Board extends React.Component {
   render() {
     // console.log(`USER is, ${this.props.activeUser}`)
     return <div>
-{/*      
-        <div>POINTS: {this.props.points} </div> */}
+     
+        <div >POINTS {this.state.points} </div>
 
         <div className="board-row">
           {this.renderSquare(1)}
