@@ -1,5 +1,6 @@
 import React from 'react'
 import Square from './Square'
+import { API_ROOT } from "../constants";
 
 class Board extends React.Component {
   // state = {
@@ -12,6 +13,10 @@ class Board extends React.Component {
   //   guesses: this.props.guesses
   // };
 
+  // state = {
+  //   points: 0
+  // }
+  
   renderSquare(i) {
     return (
       <Square
@@ -19,16 +24,17 @@ class Board extends React.Component {
         value={i}
         room_id={this.props.room.id}
         user_id={this.props.activeUser}
-
+        // points={this.state.points}
       />
     );
   }
 
   render() {
     // console.log(`USER is, ${this.props.activeUser}`)
-    return (
-      <div>
-        {/* <div className="status">{status}</div> */}
+    return <div>
+{/*      
+        <div>POINTS: {this.props.points} </div> */}
+
         <div className="board-row">
           {this.renderSquare(1)}
           {this.renderSquare(2)}
@@ -62,8 +68,7 @@ class Board extends React.Component {
           {this.renderSquare(26)}
           {this.renderSquare(27)}
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 
